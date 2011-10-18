@@ -15,10 +15,38 @@ Feature: Check ZFS
 		Then the exit status should be 0
 		And the stdout should contain exactly:
 			"""
-			ZFS OK: All pools are online
+			OK: All pools are online
 			
 			"""
 
-	Scenario: WARNING if at least one pool is degrated and the others are online		
+	Scenario: WARNING if at least one pool is degraded and the others are online		
+		Given a double of "zpool" with stdout:
+			"""
+			rpool	ONLINE
+			tank	DEGRADED
+			tank2	ONLINE
+			"""
+		When I run `check_zfs`
+		Then the exit status should be 1
+		And the stdout should contain exactly:
+			"""
+			Warning: 1 pool is degraded
+			
+			"""
+
 	Scenario: CRITICAL if at least one pool is neither online nor degrated
+			Given a double of "zpool" with stdout:
+				"""
+				rpool	ONLINE
+				tank	DEGRADED
+				tank2	FAULTED
+				"""
+			When I run `check_zfs`
+			Then the exit status should be 2
+			And the stdout should contain exactly:
+				"""
+				Critical: 1 pool is busted
+
+				"""
+
 	Scenario: UNKNOWN when ...
