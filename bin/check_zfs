@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby -w
+require 'nagios-probe'
+
+class CheckZFS < Nagios::Probe
+  def health_by_pool
+    @health_by_pool ||= `zpool list -H -o name,health`.split("\n").inject({}) do |pools,line|
+      name, health = line.split("\t")
+      pools[name] = health
+      pools
+    end
+  end
+  
+  def pools(health = nil)
+    (health && health_by_pool.select { |p,h| h == health.to_s.upcase } ) || health_by_pool
+  end
+  
+  def check_crit
+    !pools(:faulted).empty?
+  end
+
+  def check_warn
+    !pools(:degraded).empty?
+  end
+
+  def check_ok
+    pools(:online).count == pools.count
+  end
+
+  def info
+    s = []
+    [:faulted, :degraded, :online].each do |health|
+      s << "#{pools(health).count} #{health.to_s.upcase}" unless pools(health).empty?
+    end
+    s.join(", ")
+  end
+  
+  alias :crit_message :info
+  alias :warn_message :info
+  alias :ok_message   :info
+end
+
+begin
+  options = {} # Nagios::Probe constructor accepts a single optional param that is assigned to @opts
+  probe = CheckZFS.new(options)
+  probe.run
+rescue Exception => e
+  puts "Unknown: " + e
+  exit Nagios::UNKNOWN
+end
+
+puts probe.message
+exit probe.retval
