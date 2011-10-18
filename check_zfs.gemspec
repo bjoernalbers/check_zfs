@@ -8,6 +8,10 @@ Gem::Specification.new do |s|
   s.description = 'Monitor the health of your ZFS pools with Nagios'
   s.summary     = "#{s.name}-#{s.version}"
   s.homepage    = 'https://github.com/bjoernalbers/check_zfs'
+  
+  s.add_development_dependency 'cucumber', '>= 1.0.2'
+  s.add_development_dependency 'aruba', '>= 0.4.6'
+  s.add_development_dependency 'aruba-doubles', '>= 0.0.2'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
