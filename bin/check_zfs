@@ -2,13 +2,16 @@
 require 'nagios-probe'
 
 class CheckZFS < Nagios::Probe
+  def zpool_list
+    @zpool_list ||= `zpool list -H -o name,health`
+  end
   
   def check_crit
-    !`zpool list -H -o name,health`.split("\n").delete_if {|p| p =~ /(ONLINE|DEGRADED)/ }.empty?
+    !zpool_list.split("\n").delete_if {|p| p =~ /(ONLINE|DEGRADED)/ }.empty?
   end
 
   def check_warn
-    `zpool list -H -o name,health`.include?('DEGRADED')
+    zpool_list.include?('DEGRADED')
   end
 
   def crit_message
