@@ -20,10 +20,7 @@ Feature: Check ZFS
 			"""
 			
 		Examples:
-		 | rpool  | tank   | tank2  | exit | stdout                   |
-		 | ONLINE | ONLINE | ONLINE | 0    | OK: All pools are online |
-		 | ONLINE | DEGRADED | ONLINE | 1    | Warning: 1 pool is degraded |
-		 | ONLINE | DEGRADED | FAULTED | 2    | Critical: 1 pool is busted |
-
-
-	Scenario: UNKNOWN when ...
+		 | rpool  | tank     | tank2   | exit | stdout                                    |
+		 | ONLINE | ONLINE   | ONLINE  | 0    | OK: 3 ONLINE                              |
+		 | ONLINE | DEGRADED | ONLINE  | 1    | Warning: 1 DEGRADED, 2 ONLINE             |
+		 | ONLINE | DEGRADED | FAULTED | 2    | Critical: 1 FAULTED, 1 DEGRADED, 1 ONLINE |
