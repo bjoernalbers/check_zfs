@@ -1,5 +1,1 @@
-require "check_zfs/version"
-
-module CheckZfs
-  # Your code goes here...
-end
+# Load nothing - just keep the file here to keep bundler happy.
