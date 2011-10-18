@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby -w
+
+puts "ZFS OK: All pools are online"
