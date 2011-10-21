@@ -5,7 +5,7 @@ Feature: Check ZFS
 	I want the health of my ZFS pools monitored with Nagios by check_zfs
 
 	Scenario Outline: Exit status and stdout
-		Given a double of "zpool" with stdout:
+		Given a double of "zpool list -H -o name,health" with stdout:
 			"""
 			rpool	<rpool>
 			tank	<tank>

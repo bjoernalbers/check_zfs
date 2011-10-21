@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'check_zfs'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.authors     = ["Björn Albers"]
   s.email       = ["bjoernalbers@googlemail.com"]
   s.description = 'Monitor the health of your ZFS pools with Nagios'
@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency 'cucumber', '>= 1.0.2'
   s.add_development_dependency 'aruba', '>= 0.4.6'
-  s.add_development_dependency 'aruba-doubles', '>= 0.0.2'
+  s.add_development_dependency 'aruba-doubles', '>= 0.1.1'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
