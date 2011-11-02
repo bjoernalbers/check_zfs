@@ -2,22 +2,29 @@
 
 Monitor the health of your ZFS pools with Nagios
 
-TODO: link to nagios, zfs and nagios-plugin guidelines
+## Introduction
 
-## Installation
+Maybe you want to know if a passed out hard disk degrates your ZFS pool.
+check_zfs converts the output of `zpool` into the (Nagios Plugin format)[http://nagiosplug.sourceforge.net/developer-guidelines.html]... really no rocket science.
+Install this little gem on your ZFS host and let [Nagios](http://www.nagios.org/) run it via [NRPE](http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details) to see if your pools are still green (=ONLINE).
+
+## Installation and Usage
+
+NRPE needs to be installed on your ZFS host and should have defined a check_zfs service.
+Then install the check_zfs via RubyGems:
 
 	`gem install check_zfs`
 
-## Usage
+Run it manually for testing:
 
 	`check_zfs`
 
-TODO: Add config example for nagios!
-TODO: Show command in action!
-
 ## Caveats
 
-TODO: Add note about tested platform(s)!
+This gem was tested under Solaris 10 10/09 with...
+
+`pkginfo -l SUNWzfsu`[/VERSION:\s+(.*)/,1]
+=> "11.10.0,REV=2006.05.18.01.46"
 
 ## Note on Patches/Pull Requests
 
