@@ -2,8 +2,14 @@
 require 'nagios-probe'
 
 class CheckZFS < Nagios::Probe
+  def zpools
+    output = `zpool list -H -o name,health 2>&1`
+    raise output unless $?.success?
+    output.split("\n")
+  end
+  
   def health_by_pool
-    @health_by_pool ||= `zpool list -H -o name,health`.split("\n").inject({}) do |pools,line|
+    @health_by_pool ||= zpools.inject({}) do |pools,line|
       name, health = line.split("\t")
       pools[name] = health
       pools
