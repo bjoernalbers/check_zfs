@@ -3,9 +3,9 @@ require 'nagios-probe'
 
 class CheckZFS < Nagios::Probe
   def zpools
-    zpool_list = `zpool list -H -o name,health`.split("\n")
-    raise unless $?.success?
-    zpool_list
+    output = `zpool list -H -o name,health 2>&1`
+    raise output unless $?.success?
+    output.split("\n")
   end
   
   def health_by_pool

@@ -32,4 +32,4 @@ Feature: Check ZFS
 			"""
 		When I run `check_zfs`
 		Then the exit status should be 3
-		And the stdout should contain "Unknown"
+		And the stdout should contain "Unknown: command not found: zpool"
