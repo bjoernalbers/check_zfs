@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'check_zfs'
-  s.version     = '0.0.3'
+  s.version     = '0.1.0'
   s.authors     = ["Björn Albers"]
   s.email       = ["bjoernalbers@googlemail.com"]
   s.description = 'Monitor the health of your ZFS pools with Nagios'
