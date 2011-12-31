@@ -2,15 +2,16 @@
 
 Gem::Specification.new do |s|
   s.name        = 'check_zfs'
-  s.version     = '0.0.3'
+  s.version     = '0.1.0'
   s.authors     = ["Björn Albers"]
   s.email       = ["bjoernalbers@googlemail.com"]
   s.description = 'Monitor the health of your ZFS pools with Nagios'
   s.summary     = "#{s.name}-#{s.version}"
   s.homepage    = 'https://github.com/bjoernalbers/check_zfs'
   
-  s.add_dependency 'nagios-probe', '>= 0.1.2'
+  s.add_dependency 'nagiosplugin', '~> 0.0.3'
   
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'cucumber', '>= 1.0.2'
   s.add_development_dependency 'aruba', '>= 0.4.6'
   s.add_development_dependency 'aruba-doubles', '>= 0.2.0'
