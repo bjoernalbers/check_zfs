@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary     = "#{s.name}-#{s.version}"
   s.homepage    = 'https://github.com/bjoernalbers/check_zfs'
   
-  s.add_dependency 'nagios-probe', '>= 0.1.2'
+  s.add_dependency 'nagiosplugin', '~> 0.0.3'
   
   s.add_development_dependency 'rake'
   s.add_development_dependency 'cucumber', '>= 1.0.2'
