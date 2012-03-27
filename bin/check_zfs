@@ -1,37 +1,22 @@
 #!/usr/bin/env ruby -w
-require 'nagiosplugin'
+
+begin
+  require 'nagiosplugin'
+rescue LoadError
+  require 'rubygems'
+  require 'nagiosplugin'
+end
+
 
 class ZFS < NagiosPlugin::Plugin
-  def zpools
-    out = `zpool list -H -o name,health 2>&1`
-    raise out unless $?.success?
-    out.split("\n")
-  end
-  
-  def health_by_pool
-    @health_by_pool ||= zpools.inject({}) do |pools,line|
-      name, health = line.split("\t")
-      pools[name] = health
-      pools
-    end
-  end
-  
-  def pools(health = nil)
-    (health && health_by_pool.select { |p,h| h == health.to_s.upcase } ) || health_by_pool
-  end
-  
-  def critical?
-    !pools(:faulted).empty?
+  # Check the ZFS status (required method by nagiosplugin)
+  def check
+    critical(output) if !pools(:faulted).empty?
+    warning(output) if !pools(:degraded).empty?
+    ok(output) if pools(:online).count == pools.count
   end
 
-  def warning?
-    !pools(:degraded).empty?
-  end
-
-  def ok?
-    pools(:online).count == pools.count
-  end
-
+  # @return [String] the summarized check result
   def output
     s = []
     [:faulted, :degraded, :online].each do |health|
@@ -39,6 +24,27 @@ class ZFS < NagiosPlugin::Plugin
     end
     s.join(", ")
   end
+
+  private
+
+  def pools(health = nil)
+    (health && health_by_pool.select { |p,h| h == health.to_s.upcase } ) || health_by_pool
+  end
+
+  def health_by_pool
+    @health_by_pool ||= zpools.inject({}) do |pools,line|
+      name, health = line.split("\t")
+      pools[name] = health
+      pools
+    end
+  end
+
+  def zpools
+    out = `zpool list -H -o name,health 2>&1`
+    raise out unless $?.success?
+    out.split("\n")
+  end
 end
 
-ZFS.check!
+
+ZFS.run
