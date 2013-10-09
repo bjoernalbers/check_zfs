@@ -2,6 +2,9 @@
 
 Monitor the health of your ZFS pools with Nagios
 
+**DEPRECATED: Please use
+[nagios-zfs](https://github.com/bjoernalbers/nagios-zfs) instead!**
+
 ## Introduction
 
 Maybe you want to know if a passed out hard disk degrates your ZFS pool.

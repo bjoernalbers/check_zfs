@@ -2,13 +2,13 @@
 
 Gem::Specification.new do |s|
   s.name        = 'check_zfs'
-  s.version     = '0.2.0'
+  s.version     = '0.2.1'
   s.authors     = ['Björn Albers']
   s.email       = ['bjoernalbers@googlemail.com']
-  s.description = 'Monitor the health of your ZFS pools with Nagios'
+  s.description = 'DEPRECATED: Please use nagios-zfs instead!'
   s.summary     = "#{s.name}-#{s.version}"
-  s.homepage    = 'https://github.com/bjoernalbers/check_zfs'
-  
+  s.homepage    = 'https://github.com/bjoernalbers/nagios-zfs'
+
   s.add_dependency 'nagiosplugin', '~> 1.0.0'
   
   s.add_development_dependency 'rake'
